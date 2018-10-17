@@ -17,15 +17,19 @@ class Stream:
     An input stream for object parsing
     """
 
-    def __init__(self, io_stream, debug: bool = False):
+    def __init__(self, io_stream, debug: bool = False, offset: int = 0):
         """
         Constructor for Streams
         :param io_stream: input stream, usually a file handle
         :param debug: true if debugging output should be created during object read
+        :param offset: offset to start reading at
         """
         self._io_stream = io_stream
         self.debug = debug
         self.debug_depth = 0
+
+        if offset:
+            self._io_stream.seek(offset)
 
     def tell(self) -> int:
         """

@@ -8,7 +8,7 @@ import argparse
 import pprint
 from io import BytesIO
 
-from slyr.parser.symbol_parser import read_symbol
+from slyr.parser.stream import Stream
 from slyr.converters.dictionary import DictionaryConverter
 from slyr.bintools.scanner import SCANNERS
 
@@ -20,8 +20,17 @@ parser = argparse.ArgumentParser()
 parser.add_argument("file", help="bin file to parse")
 parser.add_argument('--debug', help='Debug mode', action='store_true')
 parser.add_argument('--scan', help='Scan mode', action='store_true')
+parser.add_argument('--offset', help='Scan offset')
+parser.add_argument('--length', help='Length of scan')
 
 args = parser.parse_args()
+
+offset = 0
+if args.offset:
+    offset = int(args.offset, 0)
+length = None
+if args.length:
+    length = int(args.length, 0)
 
 if args.scan:
     from colorama import init, Fore
@@ -51,7 +60,7 @@ if args.scan:
                         if scan_results_array[i] is None or scan_results_array[i].precedence() < res.precedence():
                             scan_results_array = scan_results_array[:i] + [res] + scan_results_array[i + 1:]
 
-            if not f.read(1):
+            if (length and f.tell() > offset + length) or not f.read(1):
                 break
 
         f.seek(0)
@@ -67,6 +76,8 @@ if args.scan:
                 formatted = ''
                 for i, c in enumerate(line):
                     char = format_char(c)
+                    if line_start + i < offset:
+                        char = '  '
                     if scan_results_array[line_start + i] is not None:
                         formatted += scan_results_array[line_start + i].color()
                     formatted += char + ' ' + Fore.WHITE
@@ -83,16 +94,19 @@ if args.scan:
 
                 return formatted
 
+
             start = f.tell()
             part = f.read(16)
-            print('{}\t{}'.format(hex(start), format_line(start, part)))
-            if len(part) < 16:
-                break
+            if start + 16 > offset:
+                print('{}\t{}'.format(hex(start), format_line(start, part)))
+                if len(part) < 16 or (length and start + 16 > offset + length):
+                    break
 
     print('Scanning complete\n\n\n')
 
 with open(args.file, 'rb') as f:
-    symbol = read_symbol(f, debug=args.debug)
+    stream = Stream(f, debug=args.debug, offset=offset)
+    object = stream.read_object('symbol')
 
 converter = DictionaryConverter()
-pprint.pprint(converter.convert_symbol(symbol))
+pprint.pprint(converter.convert_object(object))
