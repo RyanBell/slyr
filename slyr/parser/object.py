@@ -3,7 +3,7 @@
 Base class for persistent objects
 """
 
-from typing import List
+from typing import List, Optional
 
 
 class Object:
@@ -37,3 +37,9 @@ class Object:
         Returns a list of all child objects referenced by this object
         """
         return []
+
+    def to_dict(self) -> Optional[dict]:
+        """
+        Converts the object to a dictionary
+        """
+        return None

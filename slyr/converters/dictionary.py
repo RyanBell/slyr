@@ -43,6 +43,7 @@ from slyr.parser.objects.decoration import (
     LineDecoration,
     SimpleLineDecoration
 )
+from slyr.parser.object import Object
 from slyr.parser.objects.font import Font
 from slyr.parser.objects.ramps import ColorRamp
 from slyr.parser.objects.picture import (Picture,
@@ -59,6 +60,16 @@ class DictionaryConverter(Converter):  # pylint: disable=too-many-public-methods
 
     def __init__(self):
         self.out = {}
+
+    def convert_object(self, o: Object):
+        """
+        Converts an object to a dictionary
+        """
+        self.out = o.to_dict()
+        if self.out is not None:
+            return self.out
+        else:
+            return self.convert_symbol(o)
 
     def convert_symbol(self, symbol: Symbol):
         self.out = {}
