@@ -49,6 +49,7 @@ from slyr.parser.objects.ramps import (
     AlgorithmicColorRamp
 )
 from slyr.parser.objects.picture import StdPicture
+from slyr.parser.objects.property_set import PropertySet
 
 
 def initialize_registry():
@@ -87,3 +88,4 @@ def initialize_registry():
     REGISTRY.register(PictureMarkerSymbolLayer)
     REGISTRY.register(PictureFillSymbolLayer)
     REGISTRY.register(StdPicture)
+    REGISTRY.register(PropertySet)
