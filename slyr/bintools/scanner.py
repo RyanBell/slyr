@@ -110,12 +110,13 @@ class StringScan(ObjectScan):
         return ''.join(filter(lambda x: x in StringScan.PRINTABLE, s))
 
     def check_handle(self, file_handle):
+        start = file_handle.tell()
         try:
-            start = file_handle.tell()
             string_value = Stream(file_handle).read_string()
             if string_value and StringScan.strip_non_ascii(string_value) == string_value:
                 return StringMatch(start, file_handle.tell() - start, string_value)
-        except:  # nopep8, pylint: disable=bare-except
+
+        except (UnicodeDecodeError, AssertionError):
             pass
         return None
 
