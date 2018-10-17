@@ -134,7 +134,7 @@ class Stream:
         guid_bin = binascii.hexlify(self._io_stream.read(16))
 
         guid = ObjectRegistry.hex_to_guid(guid_bin)
-        if guid != '00000000-0000-0000-0000-000000000000':
+        if debug_string and guid != '00000000-0000-0000-0000-000000000000':
             self.log('Found {} guid of {}'.format(debug_string, guid), 16)
         return guid
 
