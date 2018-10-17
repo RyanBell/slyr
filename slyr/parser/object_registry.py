@@ -37,7 +37,6 @@ class ObjectRegistry:
         '50317368-bd70-11d3-9f79-00c04f6bc709': 'PieChartSymbol',
         '50317369-bd70-11d3-9f79-00c04f6bc709': 'StackedChartSymbol',
 
-        'd9b4fa40-d6d9-11d1-aa81-00c04fa33a15': 'GEODATABASE_SDE',
         '52353152-891a-11d0-bec6-00805f7c4268': 'CLASS_FEATURECLASS',
         '7a566981-c114-11d2-8a28-006097aff44e': 'CLASS_TABLE',
         'e3676993-c682-11d2-8a2a-006097aff44e': 'CLASS_ANNOTATION',
@@ -69,10 +68,12 @@ class ObjectRegistry:
         '2066267e-e3b8-11d2-b868-00600802e603': 'AreaPatch',
         '2066267f-e3b8-11d2-b868-00600802e603': 'LinePatch',
         'e663a651-8aad-11d0-bec7-00805f7c4268': 'FeatureLayer',
-        '198846d0-ca42-11d1-aa7c-00c04fa33a15':'FeatureClassName',
-        '198846cf-ca42-11d1-aa7c-00c04fa33a15':'FeatureDatasetName',
-        '5a350011-e371-11d1-aa82-00c04fa33a15':'WorkspaceName',
-        '588e5a11-d09b-11d1-aa7c-00c04fa33a15':'PropertySet'
+        '198846cf-ca42-11d1-aa7c-00c04fa33a15': 'FeatureDatasetName',
+        'a06adb96-d95c-11d1-aa81-00c04fa33a15': 'ShapefileWorkspaceFactory',
+        'd9b4fa40-d6d9-11d1-aa81-00c04fa33a15': 'SdeWorkspaceFactory',
+        '4eab5691-8f9c-11d2-ab21-00c04fa334b3': 'SingleSymbolPropertyPage',
+        'a2baae2d-969b-11d2-ae77-080009ec732a': 'FieldInfo',
+        '7e4f4719-8e54-11d2-aad8-000000000000': 'NumericFormat'
     }
 
     def __init__(self):
