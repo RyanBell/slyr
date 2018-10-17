@@ -12,6 +12,10 @@ from colorama import Fore
 from slyr.parser.stream import Stream
 from slyr.parser.object_registry import REGISTRY
 from slyr.parser.objects.colors import Color
+from slyr.parser.exceptions import (UnknownGuidException,
+                                    UnsupportedVersionException,
+                                    UnreadablePictureException,
+                                    NotImplementedException)
 
 
 class ObjectScan:
@@ -289,9 +293,9 @@ class PersistentMatch(ObjectMatch):
     Persistent object match
     """
 
-    def __init__(self, match_start, match_length, persistent_object):
+    def __init__(self, match_start, match_length, value):
         super().__init__(match_start, match_length)
-        self.persistent_object = persistent_object
+        self.v = value
 
     @staticmethod
     def precedence():
@@ -302,7 +306,7 @@ class PersistentMatch(ObjectMatch):
         return Fore.LIGHTYELLOW_EX
 
     def value(self):
-        return self.persistent_object.__class__.__name__
+        return self.v
 
 
 class PersistentScan(ObjectScan):
@@ -312,10 +316,22 @@ class PersistentScan(ObjectScan):
 
     def check_handle(self, file_handle):
         try:
+            start = file_handle.tell()
             stream = Stream(file_handle)
-            o = stream.read_object()
-            if o is not None:
-                return PersistentMatch(file_handle.tell() - 1, 1, o)
+            try:
+                o = stream.read_object()
+                if o is not None:
+                    return PersistentMatch(file_handle.tell() - 1, 1, o.__class__.__name__)
+            except (UnknownGuidException,
+                    UnsupportedVersionException,
+                    UnreadablePictureException,
+                    NotImplementedException):
+                pass
+            stream.seek(start)
+            guid = stream.read_guid()
+            if guid in REGISTRY.NOT_IMPLEMENTED_GUIDS:
+                return PersistentMatch(file_handle.tell() - 16, 16, REGISTRY.NOT_IMPLEMENTED_GUIDS[guid])
+
             else:
                 return None
         except:  # nopep8, pylint: disable=bare-except

@@ -36,6 +36,8 @@ class ObjectRegistry:
         '5031736a-bd70-11d3-9f79-00c04f6bc709': 'BarChartSymbol',
         '50317368-bd70-11d3-9f79-00c04f6bc709': 'PieChartSymbol',
         '50317369-bd70-11d3-9f79-00c04f6bc709': 'StackedChartSymbol',
+
+        'd9b4fa40-d6d9-11d1-aa81-00c04fa33a15': 'GEODATABASE_SDE'
     }
 
     def __init__(self):
