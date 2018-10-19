@@ -5,6 +5,7 @@ Scans a binary blob for interesting looking bits, which may give clues to revers
 """
 
 import string
+import struct
 from struct import unpack
 import binascii
 from colorama import Fore
@@ -116,7 +117,7 @@ class StringScan(ObjectScan):
             if string_value and StringScan.strip_non_ascii(string_value) == string_value:
                 return StringMatch(start, file_handle.tell() - start, string_value)
 
-        except (UnicodeDecodeError, AssertionError):
+        except (UnicodeDecodeError, AssertionError, struct.error):
             pass
         return None
 
