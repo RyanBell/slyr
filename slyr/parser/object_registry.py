@@ -72,8 +72,7 @@ class ObjectRegistry:
         'a06adb96-d95c-11d1-aa81-00c04fa33a15': 'ShapefileWorkspaceFactory',
         'd9b4fa40-d6d9-11d1-aa81-00c04fa33a15': 'SdeWorkspaceFactory',
         '4eab5691-8f9c-11d2-ab21-00c04fa334b3': 'SingleSymbolPropertyPage',
-        'a2baae2d-969b-11d2-ae77-080009ec732a': 'FieldInfo',
-        '7e4f4719-8e54-11d2-aad8-000000000000': 'NumericFormat'
+        '1d5849f3-0d33-11d2-a26f-080009b6f22b': 'AnnotateLayerPropertiesCollection'
     }
 
     def __init__(self):

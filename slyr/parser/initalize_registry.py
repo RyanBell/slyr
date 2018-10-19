@@ -88,4 +88,6 @@ def initialize_registry():
     REGISTRY.register(PictureMarkerSymbolLayer)
     REGISTRY.register(PictureFillSymbolLayer)
     REGISTRY.register(StdPicture)
+    REGISTRY.register(NumericFormat)
+    REGISTRY.register(FieldInfo)
     REGISTRY.register(PropertySet)
