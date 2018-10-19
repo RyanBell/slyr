@@ -50,6 +50,11 @@ from slyr.parser.objects.ramps import (
 )
 from slyr.parser.objects.picture import StdPicture
 from slyr.parser.objects.property_set import PropertySet
+from slyr.parser.objects.workspace_name import WorkspaceName
+from slyr.parser.objects.feature_class_name import FeatureClassName
+from slyr.parser.objects.numeric_format import NumericFormat
+from slyr.parser.objects.field_info import FieldInfo
+from slyr.parser.objects.simple_renderer import SimpleRenderer
 
 
 def initialize_registry():
@@ -91,3 +96,6 @@ def initialize_registry():
     REGISTRY.register(NumericFormat)
     REGISTRY.register(FieldInfo)
     REGISTRY.register(PropertySet)
+    REGISTRY.register(WorkspaceName)
+    REGISTRY.register(FeatureClassName)
+    REGISTRY.register(SimpleRenderer)

@@ -26,7 +26,27 @@ class Stream:
         """
         self._io_stream = io_stream
         self.debug = debug
+        self.is_layer = True  # todo
         self.debug_depth = 0
+
+        if False:
+            check = binascii.hexlify(self.read(4))
+            if check == b'd0cf11e0':
+                self.is_layer = True
+
+                # burn up to the FeatureLayer clsid
+                while True:
+                    start = self.tell()
+                    clsid = self.read_guid()
+                    if clsid == 'e663a651-8aad-11d0-bec7-00805f7c4268':
+                        self.rewind(16)
+                        break
+                    self.seek(start + 1)
+
+            else:
+                self._io_stream.seek(0)
+        # else:
+        #    self._io_stream.seek(0)
 
         if offset:
             self._io_stream.seek(offset)
@@ -151,6 +171,8 @@ class Stream:
 
         length = unpack("<I", self._io_stream.read(4))[0]
         self.log('string of length {}'.format(int(length / 2 - 1)), 4)
+        if length == 0:
+            return ''
         buffer = self._io_stream.read(length - 2)
         string = buffer.decode('utf-16')
         terminator = binascii.hexlify(self._io_stream.read(2))
@@ -172,6 +194,9 @@ class Stream:
         if res is not None:
             self.debug_depth += 1
 
+            if self.is_layer:
+                self.read(4)
+
             version = 1
             compatible_versions = res.compatible_versions()
             if compatible_versions is not None:
@@ -184,6 +209,7 @@ class Stream:
 
             res.read(self, version)
             self.log('ended {}'.format(res.__class__.__name__))
+
             if self.debug:
                 print('')
             self.debug_depth -= 1

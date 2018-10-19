@@ -49,7 +49,6 @@ class ObjectRegistry:
         '3eaa2478-5332-40f8-8fa8-62382390a3ba': 'CLASS_RASTERCATALOG',
         'a07e9cb1-9a95-11d2-891a-0000f877762d': 'CLASS_ATTRIBUTED_RELATIONSHIP',
 
-        'f3435801-5779-11d0-98bf-00805f7ced21': 'SimpleRenderer',
         'ae5f7ea2-8b48-11d0-8356-080009b996cc': 'ClassBreaksRenderer',
         '207c19f5-ed81-11d0-8bba-080009ee4e41': 'ScaleDependentRenderer',
         'c3346d29-b2bc-11d1-8817-080009ec732a': 'UniqueValueRenderer',

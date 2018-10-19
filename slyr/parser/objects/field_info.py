@@ -25,15 +25,16 @@ class FieldInfo(Object):
 
     @staticmethod
     def compatible_versions():
-        return [4]
+        return [2, 4]
 
     def read(self, stream: Stream, version):
         assert binascii.hexlify(stream.read(4)) == b'ffff0000'
         self.alias = stream.read_string('alias')
         self.number_format = stream.read_object('format')
-        check = binascii.hexlify(stream.read(8))
-        assert check == b'ffffffffffff0000', check
-        self.visible = binascii.hexlify(stream.read(2)) == b'0000'
+        if version >= 4:
+            check = binascii.hexlify(stream.read(8))
+            assert check == b'ffffffffffff0000', check
+            self.visible = binascii.hexlify(stream.read(2)) == b'0000'
 
     def to_dict(self):
         return {
