@@ -140,7 +140,7 @@ class GuidCodeMatch(ObjectMatch):
         return Fore.CYAN
 
     def value(self):
-        return self.found_type
+        return self.found_type + '^'
 
 
 class GuidCodeScan(ObjectScan):
@@ -304,7 +304,7 @@ class PersistentMatch(ObjectMatch):
         return Fore.LIGHTYELLOW_EX
 
     def value(self):
-        return self.persistent_object.__class__.__name__
+        return '$' + self.persistent_object.__class__.__name__
 
 
 class PersistentScan(ObjectScan):
@@ -325,5 +325,5 @@ class PersistentScan(ObjectScan):
         return None
 
 
-SCANNERS = [StringScan(), GuidCodeScan(), DoubleScan(), IntScan(),
+SCANNERS = [StringScan(), GuidCodeScan(), DoubleScan(),# IntScan(),
             ColorScan(), PersistentScan()]
